@@ -1,0 +1,19 @@
+extends ./layout
+
+block content
+    #carouselExample4.carousel.slide(data-ride='carousel')
+      .carousel-inner(id='carousel')
+        .carousel-item.active
+          img.d-block.w-100.responsive.img-fluid(src='../images/carousel/foto6.jpeg', alt='First slide', height='570')
+          |             
+          .carousel-caption.d-none.d-md-block
+            if estado == 1
+              .alert.alert-primary(role='alert')
+                | Te has registrado con exito!
+            form.needs-validation(novalidate='', action='/user/create', method='GET', enctype='multipart/form-data')
+              input(type='hidden', name='_token', value='{{ csrf_token() }}')
+              button.btn.btn-primary.btnColorR(type='submit') REG&Iacute;STRATE
+              |               
+              a.btn.btn-outline-primary.btnColorIS(href='/login') INICIA SESI&Oacute;N
+        |           
+        

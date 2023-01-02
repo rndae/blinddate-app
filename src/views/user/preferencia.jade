@@ -1,0 +1,126 @@
+extends ./layoutUser
+
+block content
+  .divPadding
+    .row
+      .col-8
+        .divBloqueCardP.block-center
+          .card.marginCard
+            .card-body
+              h5.card-title(align='center') Preferencias
+              |           
+              hr
+              h6.card-subtitle.mb-2.text-muted(align='center') &iexcl;Añade tus Preferencias!
+              |           
+              hr
+              |           
+              br
+              form.needs-validation(novalidate='', action='/preferencias',method='POST')
+                input(type='hidden', name='_token', value='{{ csrf_token() }}')
+                |     
+                .form-row
+                  .col-md-2.mb-4
+                  |               
+                  .col-md-2.mb-4
+                    label.txtColor(for='category') Categoría:
+                  |               
+                  .form-group.col-md-6.mb-4
+                    select#category.form-control.custom-select(name='category', required='', onchange="categorySelected()")
+                      option(disabled='', selected='', hidden='') Escoge una Categoría
+                      each category in preferencesCategories                     
+                        option(value=category._id)= category.name    
+                    |                 
+                    .invalid-feedback
+                      | Seleccione una opci&oacute;n
+                  |               
+                  .col-md-2.mb-4
+                |   
+                .form-row
+                  .col-md-2.mb-4
+                  |               
+                  .col-md-2.mb-4
+                    label.txtColor(for='preference') Preferencia:
+                  |               
+                  .form-group.col-md-6.mb-4
+                    select#preference.form-control.custom-select(name='preference', required='', disabled)
+                      option(disabled='', selected='', hidden='') Escoge una Preferencia   
+                    .invalid-feedback
+                      | Seleccione una opci&oacute;n
+                  |               
+                  .col-md-2.mb-4
+                |        
+                .container-fluid.divBtnPaddingCard
+                  button.btn.btn-primary.btnColorR(type='submit') Añadir 
+                  button.btn.btn-primary.btnColorIS(type='button', data-toggle='modal', data-target='#myModal') Nuevo&nbsp&nbsp
+                    i.fas.fa-plus-circle(align='left')
+      .col-4
+        table.table.table-responsive
+          thead
+            tr
+              th(scope='col') Preferencia
+              |       
+              th(scope='col') Acción
+          |   
+          tbody
+            each userP in preferencesUsers
+              each pref in preferences
+                tr
+                  if user.id == userP.idUser
+                    if pref._id == userP.idPreference
+                      td(scope='row')= pref.name
+                      |       
+                      td
+                        a(href='/preferencias/'+userP._id)
+                          i.fas.fa-trash-alt(align='center')                      
+  #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalCenterTitle', aria-hidden='true')                            
+    form.needs-validation.modal-dialog.modal-dialog-centered(role='document',novalidate='', action='/preferencia',method='POST')
+      .modal-content
+        .modal-header
+          h5#exampleModalLongTitle.modal-title Añadir Preferencia
+            |         
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+          |       
+        .modal-body
+          .form-row
+            .col-md-1.mb-4
+            |               
+            .col-md-3.mb-4
+              label.txtColor(for='preferenceCat') Categoría:
+            |               
+            .form-group.col-md-6.mb-4
+              select#preferenceCat.form-control.custom-select(name='preferenceCat', required='')
+                option(disabled='', selected='', hidden='') Escoge una Preferencia
+                each category in preferencesCategories                     
+                  option(value=category._id)= category.name    
+              |                 
+              .invalid-feedback
+                | Seleccione una opci&oacute;n
+            |               
+            .col-md-1.mb-4
+          |   
+          .form-row
+            .col-md-1.mb-4
+            |               
+            .col-md-3.mb-4
+              label.txtColor(for='preferenceN') Nuevo:
+            |               
+            .form-group.col-md-6.mb-4
+              input#preferenceN.form-control(name='preferenceN', type='text', placeholder='Nueva Preferencia', pattern='^([A-ZÁÉÍÓÚa-zñáéíóúäëïöü ]+[\.]*)+$', minlength='3', maxlength='50', required='')
+              |                 
+              .invalid-feedback
+                | Introduzca la 
+                i Nueva Preferencia
+                |  entre 3 y 50 letras
+            |               
+            .col-md-1.mb-4
+          |           
+        |       
+        .modal-footer
+          button.btn.btn-secondary.btnColorIS(type='button', data-dismiss='modal') Cancelar
+          |         
+          button.btn.btn-primary.btnColorR(type='submit') Guardar                                
+  .divPadding
+  - local_data = JSON.stringify(preferences)
+  input#myLocalDataObjCat(type='hidden', value=local_data)
+  script(src='../javascripts/preferences.js')        

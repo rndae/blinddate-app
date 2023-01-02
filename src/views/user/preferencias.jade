@@ -1,0 +1,75 @@
+extends ./layoutUser
+
+block content 
+  .container
+    h2 Preferencias
+     .row
+        .col-3
+        .formRegistro.col-6.center-block.divPadding
+            label.txtColor(for='sex_pref') Comidas:
+            form(action='/eliminarfood', method='POST' class="form-inline" enctype="multipart/form-data")
+              input(type='hidden', name='_token', value='{{ csrf_token() }}' id='test')
+              select#foodUser.form-control.custom-select(name='sexOrientation', required='' enctype="multipart/form-data")
+                for Comidas in comidas
+                  option(value='#{Comidas.name}') #{Comidas.name}                    
+              button.btn.btn-info(style="margin-left: 10px",type='button', data-toggle="modal" data-target="#myModal") +        
+              button.btn.btn-danger(style="margin-left: 10px",type='submit') -
+            #myModal.modal.fade
+              form(action='/preferencia', method='POST')
+                .card-body.modal-dialog
+                  .modal-content
+                    .modal-header
+                      h5.modal-title Agregar una nueva comida
+                    .modal-body
+                      select#foodUser.form-control.custom-select(name='sexOrientation', required='')
+                        for Comidas in comidas
+                          option(value='#{Comidas._id}') #{Comidas.name}                    
+                    .modal-footer
+                      button.btn.btn-default(type='button', data-dismiss="modal" ) Aceptar
+            label.txtColor(for='sex_pref') Deportes:
+            form(action='/preferencia', method='POST' class="form-inline")
+              select#foodUser.form-control.custom-select(name='sexOrientation', required='')
+                for Sports in deportes
+                  option(value='#{Sports._id}') #{Sports.name}                    
+              button.btn.btn-info(style="margin-left: 10px",type='button', data-toggle="modal" data-target="#myModal1") +        
+              button.btn.btn-danger(style="margin-left: 10px",type='button' onClick="removeFood()") -
+            #myModal1.modal.fade                           
+              form(action='/preferencia', method='POST')
+                 .card-body.modal-dialog
+                  .modal-content
+                    .modal-header
+                      h6.modal-title Agregar una nueva comida
+                    .modal-body
+                      select#foodUser.form-control.custom-select(name='sexOrientation', required='')
+                        for Sports in deportes
+                          option(value='#{Sports._id}') #{Sports.name}                    
+                    .modal-footer
+                      button.btn.btn-default(type='button', data-dismiss="modal" ) Aceptar
+            label.txtColor(for='sex_pref') Musica:
+            form(action='/preferencia', method='POST' class="form-inline")
+              select#foodUser.form-control.custom-select(name='sexOrientation', required='')
+                for Music in musicas
+                  option(value='#{Music.name}') #{Music.name}                    
+              button.btn.btn-info(style="margin-left: 10px",type='button', data-toggle="modal" data-target="#myModal2") +        
+              button.btn.btn-danger(style="margin-left: 10px",type='button' onClick="removeFood()") -
+               #myModal2.modal.fade                           
+              form(action='/preferencia', method='POST')
+                 .card-body.modal-dialog
+                  .modal-content
+                    .modal-header
+                      h6.modal-title Agregar una nueva comida
+                    .modal-body
+                      select#foodUser.form-control.custom-select(name='sexOrientation', required='')
+                        for Sports in deportes
+                          option(value='#{Sports._id}') #{Sports.name}                    
+                    .modal-footer
+                      button.btn.btn-default(type='button', data-dismiss="modal" ) Aceptar
+            label.txtColor(for='sex_pref') Musica:
+            form(action='/preferencia', method='POST' class="form-inline")
+              select#foodUser.form-control.custom-select(name='sexOrientation', required='')
+                for Music in musicas
+                  option(value='#{Music._id}') #{Music.name}   
+            #demo.collapse
+              .card-body
+                  
+  script(src='/javascripts/preferences.js')
