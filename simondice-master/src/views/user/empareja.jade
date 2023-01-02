@@ -1,0 +1,32 @@
+extends ./layoutUser
+
+block content
+  .divPadding
+    |     
+    .container-fluid(id='')
+      .row
+        .col-4(id='')
+          img.img-responsive.center-block.imgRedonda(id='', src='../images/love1.gif', alt='...')
+        |         
+        .col-1
+        |         
+        .col-7.center-block.divBloque
+          h3(align='center') &iexcl;Encuentra a tu pareja ideal!
+          |           
+          hr
+          |           
+          h5
+            | Si deseas entregar tu amor a otra persona, primero debes amarte a ti, buscar en tu coraz&oacute;n lo que deseas recibir
+          |           
+          div
+            br
+            p
+            if usrEncontrado == 1
+                .alert.alert-success(role='alert')
+                    | Te confirmamos que hemos encontrado al usuario m&aacutes ideal para t&iacute;.
+            else if usrEncontrado == 0
+                .alert.alert-dark(role='alert')
+                    | No se ha encontrado a nadie. Sigue participando.
+            else
+                form(action='/emparejar', method='POST')
+                    button.btn-lg.btn-primary.btnColorE.text-center(align='center', type='submit') Encontrar Pareja &#x2764;

@@ -1,0 +1,107 @@
+extends ./layoutAdministrator
+
+block content
+    .divPadding
+    | 
+    .row
+      .col-3
+      .col-6
+        .center-block.container-fluid(id='')
+          h4(align='center') Añadir Regla
+          |           
+          hr
+          .divPadding
+            form.needs-validation(novalidate='', action='/createRule',method='POST')
+              .form-row
+                .col-md-1.mb-3
+                |               
+                .form-group.col-md-8.mb-3
+                  label.txtColor.txtColorCard(for='') Seleccione las carreras compatibles:
+                |   
+                |               
+                .col-md-1.mb-3
+                | 
+              .form-row
+                .col-2
+                |                              
+                .form-group.col-4
+                  select#career1.form-control.custom-select(name='idCareer1', required='', onchange='career1Selected()')
+                    option(disabled='', selected='', hidden='') Escoja una Carrera
+                    each career in careers
+                      option(value=career._id, careerName = career.name)= career.name
+                  |                 
+                  .invalid-feedback
+                    | Seleccione una opci&oacute;
+                  input#career1name(type='hidden', name='career1')
+                |               
+                .col-1
+                  label.txtColor ----
+                |               
+                .form-group.col-4
+                  select#career2.form-control.custom-select(name='idCareer2', required='', onchange='career2Selected()')
+                    option(disabled='', selected='', hidden='') Escoja una Carrera
+                    each career in careers
+                      option(value=career._id, careerName = career.name)= career.name
+                  |                 
+                  .invalid-feedback
+                    | Seleccione una opci&oacute;n
+                  input#career2name(type='hidden', name='career2')
+                  
+              |  
+              |  
+              .form-row
+                .col-1
+                .col-2
+                  label.txtColor Valor: 
+                |               
+                .form-group.col-4
+                  input#value.form-control-range(type='range', name='value', placeholder='', min='1', max='10', step='',required='')
+                  |  
+                  .invalid-feedback
+                    | Seleccione un valor
+                .col-2
+                h4#range 
+              | 
+              .container-fluid.divBtnPaddingCard
+                button.btn.btn-primary.btnColorIS(type='reset') Reiniciar
+                |                 
+                button.btn.btn-primary.btnColorR(type='submit') Añadir                     
+      .col-3    
+    .center-block.divPadding
+      .row
+        .col-1
+        |               
+        .col-11
+          label.txtColor.txtColorCard(for='') Tabla de Reglas:
+        |   
+        |  
+      .row     
+        .col-1        
+        .col-10
+          table.table
+            thead.thead-light
+              tr
+                th(scope='col') #
+                |       
+                th(scope='col') Carrera 1
+                |       
+                th(scope='col') Carrera 2
+                |       
+                th(scope='col') Valor
+                |       
+                th(scope='col') Acción
+              |   
+            tbody
+              each regla, index in rules 
+                tr
+                  th(scope='row')= index+1
+                  |       
+                  td= regla.career1
+                  |       
+                  td= regla.career2
+                  |       
+                  td= regla.value
+                  |       
+                  td 
+                    a.fas.fa-trash-alt(align='center', href='/deleteRule/'+regla._id)  
+      script(src="/javascripts/carrera.js")
